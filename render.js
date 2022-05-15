@@ -105,7 +105,13 @@ var globalPicture = {
           }
 
           return new Promise(function(resolve, reject) {
-            getUserMedia.call(navigator, constraints, resolve, reject);
+            getUserMedia.call(navigator, {
+              video: {
+                facingMode: {
+                  exact: 'environment'
+                }
+              }
+            }, resolve, reject);
           });
         }
       }
