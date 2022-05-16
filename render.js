@@ -81,6 +81,13 @@ var globalPicture = {
         DownLeft: [],
         DownRight: []
     };
+const constraints = {
+  video: {
+    facingMode: {
+      exact: "environment"
+    }
+  }
+};
   
     function onLoad(){
       video = document.getElementById("video");
@@ -105,17 +112,13 @@ var globalPicture = {
           }
 
           return new Promise(function(resolve, reject) {
-            getUserMedia.call(navigator, {
-                facingMode: {
-                  exact: 'environment'
-                }
-            }, resolve, reject);
+            getUserMedia.call(navigator, constraints, resolve, reject);
           });
         }
       }
       
       navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: { exact: 'environment'}}})
+        .getUserMedia(constraints)
         .then(function(stream) {
           if ("srcObject" in video) {
             video.srcObject = stream;
