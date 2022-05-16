@@ -115,7 +115,7 @@ var globalPicture = {
       }
       
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({ video: { facingMode: { exact: 'environment'}})
         .then(function(stream) {
           if ("srcObject" in video) {
             video.srcObject = stream;
