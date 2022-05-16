@@ -117,25 +117,30 @@ const constraints = {
         }
       }
       
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function(stream) {
-          if ("srcObject" in video) {
-            video.srcObject = stream;
-          } else {
-            video.src = window.URL.createObjectURL(stream);
-          }
-        })
-        .catch(function(err) {
-          console.log(err.name + ": " + err.message);
-        }
-      );
+      if(!navigator.userAgentData.mobile) GetMediaToSetVideo({ video: true });
+      else GetMediaToSetVideo(constraints);
         
       detector = new AR.Detector({
         dictionaryName: 'ARUCO'
       });
 
       requestAnimationFrame(tick);
+    }
+
+    function GetMediaToSetVideo(mediaConstraints) {
+      navigator.mediaDevices
+          .getUserMedia(mediaConstraints)
+          .then(function(stream) {
+            if ("srcObject" in video) {
+              video.srcObject = stream;
+            } else {
+              video.src = window.URL.createObjectURL(stream);
+            }
+          })
+          .catch(function(err) {
+            console.log(err.name + ": " + err.message);
+          }
+        );
     }
     
     function tick(){
